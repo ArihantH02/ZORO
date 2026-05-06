@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - ZORO</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+  </head>
+  <body class="login-page">
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+      <div class="nav-container">
+        <a href="/" class="logo-container" style="text-decoration: none; color: inherit;">
+          <img src="/assets/logo.png" alt="ZORO Logo" class="logo-icon">
+          <span class="logo-text">ZORO</span>
+        </a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Back to Home</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="auth-section">
+      <div class="hero-bg-glow" style="opacity: 0.3;"></div>
+      <div class="auth-card fade-in" style="max-width: 450px;">
+        <h2 class="auth-title">Login to ZORO</h2>
+        
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" class="form-control" placeholder="Enter your company name" required>
+            <span class="error-msg" id="loginCompanyError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="employeeId">Employee ID</label>
+            <input type="text" id="employeeId" class="form-control" placeholder="e.g. ZORO-EMP-83472" required>
+            <span class="error-msg" id="loginEmpError"></span>
+          </div>
+
+          <div class="form-group" style="position: relative;">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            <span class="toggle-password" id="togglePassword">
+              <i class="fa-regular fa-eye"></i>
+            </span>
+            <span class="error-msg" id="loginPasswordError"></span>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="rememberMe">
+              <span>Remember Me</span>
+            </label>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full mt-3" id="loginBtn">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Role Based Redirection Modal (Simulation) -->
+    <div id="roleModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="success-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 id="roleTitle">Authentication Success</h3>
+        <p id="roleMessage">Redirecting to dashboard...</p>
+      </div>
+    </div>
+
+    <script type="module" src="./login.js"></script>
+    <script src="/anoai.js"></script>
+    <script type="module">
+      import { initHeroShader } from './heroShader.js';
+      initHeroShader('.auth-section');
+    </script>
+  </body>
+</html>

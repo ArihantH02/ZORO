@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <title>Dashboard - ZORO Budget Allocator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  </head>
+  <body class="dashboard-page hub-layout">
+    
+    <!-- Top Bar -->
+    <header class="hub-header">
+      <div class="logo-container" onclick="window.switchView('dashboard')">
+        <img src="/assets/logo.png" alt="ZORO Logo" class="logo-icon">
+        <span class="logo-text">ZORO</span>
+      </div>
+
+      <div class="hub-actions">
+        <div class="notification-container">
+          <div class="action-icon" id="notificationBtn">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notification-badge" id="notifBadge">0</span>
+          </div>
+          <div class="notification-dropdown" id="notificationDropdown">
+            <div class="notif-header">
+              <h3>Notifications</h3>
+              <button id="clearNotifs">Clear All</button>
+            </div>
+            <div class="notif-list" id="notifList">
+              <div class="notif-empty">No new notifications</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-dropdown-container" id="profileDropdownBtn">
+          <div class="profile-icon" title="Account Menu">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="profile-menu" id="profileMenu">
+            <a href="#" class="profile-menu-item" onclick="window.switchView('settings')"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="/" class="profile-menu-item" style="color: #FF4785;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Hub Content -->
+    <main class="hub-container">
+      
+      <!-- Home View (The Central Hub) -->
+      <section id="dashboard-view" class="view-section active">
+        <div class="hub-center-grid">
+          
+          <!-- Row 1: Budget Pool & History -->
+          <div class="hub-row top-row">
+            <div class="hub-card pool-card" id="btnBudgetPool">
+              <div class="card-bg-glow"></div>
+              <div class="card-content">
+                <i class="fa-solid fa-vault card-icon"></i>
+                <div class="pool-value" id="dispTotalBudget">₹0</div>
+                <div class="pool-label">Total Budget Pool</div>
+                <div class="click-hint">Click to manage budget <i class="fa-solid fa-arrow-right"></i></div>
+              </div>
+            </div>
+
+            <div class="hub-card history-card" id="btnBudgetHistory">
+              <div class="card-content">
+                <i class="fa-solid fa-clock-rotate-left card-icon"></i>
+                <h3>Budget History</h3>
+                <p>View past allocations and trends</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Request Budget -->
+          <div class="hub-row mid-row">
+            <div class="hub-card request-card" id="btnRequestBudget">
+              <div class="card-content">
+                <div class="request-main">
+                  <i class="fa-solid fa-file-invoice-dollar card-icon"></i>
+                  <div class="request-text">
+                    <h3>Request Budget</h3>
+                    <p>Submit a new financial requirement for your department</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-plus-circle plus-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Employee Info -->
+          <div class="hub-row bottom-row">
+            <div class="hub-card info-card">
+              <div class="info-header">
+                <h3>Personal Information</h3>
+                <span class="emp-id-tag">ID: <span id="displayEmpId">EMP-2026-001</span></span>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Employee Name</label>
+                  <div class="value" id="displayEmpName">Loading...</div>
+                </div>
+                <div class="info-item">
+                  <label>Monthly Salary</label>
+                  <div class="value text-accent" id="displayEmpSalary">₹75,000</div>
+                </div>
+                <div class="info-item">
+                  <label>Current Role</label>
+                  <div class="value" id="displayEmpRole">Loading...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE 1: Budget Details View -->
+      <section id="budget-details-view" class="view-section">
+        <div class="view-container">
+          <div class="view-header">
+            <button class="btn-back" onclick="window.switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i> Back to Hub</button>
+            <h2>Budget Overview</h2>
+          </div>
+
+          <div class="budget-summary-card glass-card">
+            <div class="summary-item">
+              <label>Total Available Budget</label>
+              <div class="value large" id="detailsTotalBudget">₹0</div>
+              <p class="text-muted">Consolidated funds across all departments</p>
+            </div>
+          </div>
+
+          <div class="selection-row">
+            <div class="select-group">
+              <label>Select Month</label>
+              <select id="selectMonth" class="form-control">
+                <option value="0">January</option><option value="1">February</option>
+                <option value="2">March</option><option value="3">April</option>
+                <option value="4">May</option><option value="5">June</option>
+                <option value="6">July</option><option value="7">August</option>
+                <option value="8">September</option><option value="9">October</option>
+                <option value="10">November</option><option value="11">December</option>
+              </select>
+            </div>
+            <div class="select-group">
+              <label>Select Year</label>
+              <select id="selectYear" class="form-control">
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+              </select>
+            </div>
+            <div class="btn-group-align">
+              <button id="btnFetchHistory" class="btn btn-primary glow-btn">
+                <i class="fa-solid fa-magnifying-glass mr-2"></i> Enter
+              </button>
+            </div>
+          </div>
+
+          <div class="chart-card glass-card mt-4" style="min-height: 450px;">
+            <h3 class="mb-4">Department Allocation Distribution</h3>
+            <div class="chart-container-large">
+              <canvas id="detailsPieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 2: Budget Request View -->
+      <section id="budget-request-view" class="view-section">
+        <div class="view-container centered-view">
+          <div class="view-header" style="width: 100%; max-width: 500px;">
+            <button class="btn-back" onclick="window.switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          </div>
+
+          <div class="hub-card request-form-card">
+            <div class="form-header">
+              <i class="fa-solid fa-file-invoice-dollar form-icon"></i>
+              <h2>Request Budget</h2>
+              <p>Submit your financial requirements for approval</p>
+            </div>
+
+            <form id="hubBudgetRequestForm">
+              <div class="form-group">
+                <label>Amount Required (₹)</label>
+                <input type="number" id="hubRequestAmount" class="form-control" placeholder="e.g. 50000" required min="1">
+              </div>
+              <div class="form-group">
+                <label>Reason for Request</label>
+                <textarea id="hubRequestReason" class="form-control" rows="4" placeholder="Describe the purpose of these funds..." required></textarea>
+              </div>
+              <div class="form-group toggle-group">
+                <label>Emergency Request?</label>
+                <div class="toggle-container">
+                  <span class="toggle-label-text">No</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="hubEmergencyToggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="toggle-label-text">Yes</span>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full glow-btn mt-4">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Submit Request
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- History View -->
+      <section id="audit-view" class="view-section">
+        <div class="view-container">
+          <div class="view-header">
+            <button class="btn-back" onclick="window.switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h2>Budget Allocation History</h2>
+          </div>
+          <div class="dash-card table-container">
+            <table class="zoro-table">
+              <thead>
+                <tr>
+                  <th>Action</th>
+                  <th>Target</th>
+                  <th>Details</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="auditLogsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings View -->
+      <section id="settings-view" class="view-section">
+        <div class="view-container">
+          <div class="view-header">
+            <button class="btn-back" onclick="window.switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h2>Settings</h2>
+          </div>
+          <div class="glass-card" style="padding: 3rem; text-align: center;">
+            <div class="team-img-container placeholder" style="width: 150px; height: 150px; font-size: 4rem; margin-bottom: 2rem;">
+              <i class="fa-solid fa-user-circle"></i>
+            </div>
+            <h2 id="settingsUserName">User Account</h2>
+            <p id="settingsUserRole" class="text-accent" style="margin-bottom: 2rem;">Administrator</p>
+            
+            <div style="max-width: 400px; margin: 0 auto; text-align: left; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+              <p style="margin-bottom: 0.5rem; font-size: 0.9rem;"><strong style="color: var(--text-muted);">Company:</strong> <span id="settingsCompany">ZORO Corp</span></p>
+              <p style="margin: 0; font-size: 0.9rem;"><strong style="color: var(--text-muted);">Employee ID:</strong> <span id="settingsEmpId">ADMIN-1234</span></p>
+            </div>
+            
+            <button class="btn btn-secondary mt-4" onclick="window.logout()" style="color: #FF4785; border-color: rgba(255, 71, 133, 0.3);">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout from System
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Request Form Modal (Triggered by Request Budget Card) -->
+    <div id="requestModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Submit Budget Request</h3>
+          <button id="closeRequestModal" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="budgetRequestForm">
+          <div class="form-group">
+            <label>Requested Amount (₹)</label>
+            <input type="number" id="requestAmount" class="form-control" required min="1">
+          </div>
+          <div class="form-group">
+            <label>Reason</label>
+            <textarea id="requestReason" class="form-control" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full mt-4">Submit Request</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script type="module" src="./dashboard.js"></script>
+  </body>
+</html>

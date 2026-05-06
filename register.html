@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - ZORO</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+  </head>
+  <body class="register-page">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="/" class="logo-container" style="text-decoration: none; color: inherit;">
+          <img src="/assets/logo.png" alt="ZORO Logo" class="logo-icon">
+          <span class="logo-text">ZORO</span>
+        </a>
+        <div class="nav-links">
+        </div>
+      </div>
+    </nav>
+
+    <!-- Registration Section -->
+    <section class="auth-section">
+      <div class="hero-bg-glow" style="opacity: 0.5;"></div>
+      <div class="auth-card fade-in">
+        <h2 class="auth-title">Register Your Company</h2>
+        
+        <form id="registerForm" class="auth-form">
+          <div class="form-group">
+            <label for="companyName">Company Name <span class="required">*</span></label>
+            <input type="text" id="companyName" class="form-control" placeholder="Enter your company name" required>
+            <span class="error-msg" id="companyNameError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="mobileNumber">Mobile Number <span class="required">*</span></label>
+            <input type="tel" id="mobileNumber" class="form-control" placeholder="e.g. 9876543210" pattern="[0-9]*" required>
+            <span class="error-msg" id="mobileNumberError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email ID <span class="required">*</span></label>
+            <input type="email" id="email" class="form-control" placeholder="work@company.com" required>
+            <span class="error-msg" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="gstNumber">GST Number <span class="optional">(Optional)</span></label>
+            <input type="text" id="gstNumber" class="form-control" placeholder="e.g. 22AAAAA0000A1Z5">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Create Password <span class="required">*</span></label>
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            <span class="error-msg" id="passwordError"></span>
+          </div>
+
+          <div class="subscription-section">
+            <h3 class="subs-title">Choose Your Plan</h3>
+            
+            <div class="plans-grid">
+              <div class="plan-card selected" data-plan="monthly">
+                <div class="plan-header">
+                  <div class="plan-info">
+                    <h4 class="plan-name">ZORO Monthly</h4>
+                    <div class="plan-price">₹2999<span class="plan-duration">/month</span></div>
+                  </div>
+                  <div class="plan-radio">
+                    <div class="radio-inner"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="plan-card" data-plan="yearly">
+                <div class="plan-header">
+                  <div class="plan-info">
+                    <h4 class="plan-name">ZORO Yearly</h4>
+                    <div class="plan-price">₹9999<span class="plan-duration">/year</span></div>
+                  </div>
+                  <div class="plan-radio">
+                    <div class="radio-inner"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ul class="plan-features" style="margin-top: 1.5rem;">
+              <li><i class="fa-solid fa-check"></i> Real-time budget allocation</li>
+              <li><i class="fa-solid fa-check"></i> Multi-department collaboration</li>
+              <li><i class="fa-solid fa-check"></i> Conflict resolution engine</li>
+              <li><i class="fa-solid fa-check"></i> Audit trail and history</li>
+            </ul>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="continueBtn">Register Company</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+
+    <script type="module" src="./register.js"></script>
+    <script type="module">
+      import { initHeroShader } from './heroShader.js';
+      initHeroShader('.auth-section');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Setup - ZORO</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+  </head>
+  <body class="setup-page">
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+      <div class="nav-container">
+        <a href="/" class="logo-container" style="text-decoration: none; color: inherit;">
+          <img src="/assets/logo.png" alt="ZORO Logo" class="logo-icon">
+          <span class="logo-text">ZORO</span>
+        </a>
+        <div class="nav-links">
+        </div>
+      </div>
+    </nav>
+
+    <!-- Setup Section -->
+    <section class="auth-section setup-section">
+      <div class="hero-bg-glow" style="opacity: 0.4;"></div>
+      <div class="auth-card setup-card fade-in">
+        
+        <div class="welcome-header">
+          <h2 class="auth-title" style="margin-bottom: 0.5rem;">Welcome to ZORO!</h2>
+          <p class="auth-subtitle">Your company setup begins now.</p>
+        </div>
+
+        <div class="emp-id-section">
+          <div class="emp-id-box">
+            <span class="emp-id-label">Your Admin ID</span>
+            <span class="emp-id-value" id="generatedEmpId">ZORO-EMP-00000</span>
+          </div>
+          <p class="emp-helper-text">Use this ID to log in to your account</p>
+        </div>
+        
+        <form id="setupForm" class="auth-form">
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="companyType">Company Type</label>
+              <select id="companyType" class="form-control" required>
+                <option value="" disabled selected>Select Type</option>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+                <option value="startup">Startup</option>
+                <option value="enterprise">Enterprise</option>
+              </select>
+            </div>
+            <div class="form-group half-width">
+              <label for="companyLocation">Location <span class="optional">(Optional)</span></label>
+              <input type="text" id="companyLocation" class="form-control" placeholder="City, Country">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="companyDesc">Description <span class="optional">(Optional)</span></label>
+            <textarea id="companyDesc" class="form-control" placeholder="Briefly describe your business..." rows="2"></textarea>
+          </div>
+
+          <hr class="divider">
+
+          <div class="departments-setup">
+            <div class="form-group">
+              <label for="deptCount">How many departments does your company have?</label>
+              <input type="number" id="deptCount" class="form-control" min="1" max="20" placeholder="e.g. 3">
+            </div>
+
+            <!-- Dynamic Departments Container -->
+            <div id="dynamicDepartments" class="dynamic-departments">
+              <!-- Department cards will be injected here via JS -->
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full mt-3" id="completeBtn">Complete Registration</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h3>Success!</h3>
+        <p>Your company has been successfully registered.</p>
+        <p class="small-text">Redirecting to login...</p>
+      </div>
+    </div>
+
+    <script type="module" src="./onboarding.js"></script>
+  </body>
+</html>

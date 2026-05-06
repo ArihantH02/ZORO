@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZORO - Real-Time Collaborative Budget Allocator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Three.js CDN for Aurora Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="logo-container">
+          <img src="/assets/logo.png" alt="ZORO Logo" class="logo-icon">
+          <span class="logo-text">ZORO</span>
+        </div>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About Us</a>
+          <a href="#contact" class="nav-link">Contact Us</a>
+          <div class="profile-icon" id="profileBtn" title="Account Settings">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-content">
+        <div class="badge scroll-reveal">Enterprise Solution</div>
+        <h1 class="hero-title scroll-reveal delay-100">Turn Chaos into Control — <br/><span class="highlight">One Budget at a Time</span></h1>
+        <p class="hero-subtitle scroll-reveal delay-200">Collaborate. Compete. Conquer the Budget.</p>
+        <div class="hero-buttons scroll-reveal delay-300">
+          <button class="btn btn-primary" id="registerBtn">Register Company</button>
+          <button class="btn btn-secondary" id="loginBtn">Login</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">About ZORO</h2>
+        <div class="about-grid">
+          <div class="about-card fade-in-left">
+            <div class="about-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <h3>Real-Time Allocation</h3>
+            <p>Distribute and manage your financial resources dynamically with instant updates across all stakeholders.</p>
+          </div>
+          <div class="about-card scale-reveal delay-100">
+            <div class="about-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <h3>Multi-Department</h3>
+            <p>Enable cross-departmental collaboration, allowing teams to request and negotiate budgets effortlessly.</p>
+          </div>
+          <div class="about-card fade-in-right delay-200">
+            <div class="about-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <h3>Conflict Resolution</h3>
+            <p>Intelligent workflows to quickly resolve budget conflicts and keep projects moving forward without delay.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founders Section -->
+    <section class="founders" id="founders">
+      <div class="container">
+        <h2 class="section-title scroll-reveal">Our Leadership</h2>
+        <div class="team-grid">
+          <div class="team-card fade-in-left delay-100">
+            <div class="team-img-container placeholder">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <h3>Vikhyat</h3>
+            <p>Founder & CEO</p>
+          </div>
+          <div class="team-card fade-in-right delay-200">
+            <div class="team-img-container placeholder">
+              <i class="fa-solid fa-user-gear"></i>
+            </div>
+            <h3>Arihant</h3>
+            <p>Co-Founder & COO</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand scroll-reveal">
+            <div class="logo-container">
+              <img src="/assets/logo.png" alt="ZORO Logo" class="logo-icon footer-logo">
+              <span class="logo-text">ZORO</span>
+            </div>
+            <p class="footer-desc">Empowering organizations with real-time financial agility.</p>
+          </div>
+          <div class="footer-links scroll-reveal delay-100">
+            <h4>Contact Us</h4>
+            <ul>
+              <li><i class="fa-solid fa-envelope"></i> hello@zoro.app</li>
+              <li><i class="fa-solid fa-phone"></i> +1 (555) 123-4567</li>
+              <li><i class="fa-solid fa-location-dot"></i> 100 Innovation Way, Tech City</li>
+            </ul>
+          </div>
+          <div class="footer-social scroll-reveal delay-200">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+              <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom scroll-reveal delay-300">
+          <p>&copy; 2026 ZORO Inc. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
